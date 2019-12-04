@@ -1,8 +1,6 @@
-import { periodReducer } from './periodReducer';
-import { scheduleReducer } from './scheduleReducer';
+import { disciplinesReducer } from './disciplineReducer'
 import { combineReducers } from 'redux';
 
 export const Reducers = combineReducers({
-    periodState: periodReducer,
-    scheduleState: scheduleReducer
+    disciplineState: disciplinesReducer
 });
