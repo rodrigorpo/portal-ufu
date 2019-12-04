@@ -1,7 +1,6 @@
 import React from 'react'
 import SingleDiscipline from './single-discipline'
 
-
 export default function Discipline(props) {
     return (
         <div className="discipline__item">

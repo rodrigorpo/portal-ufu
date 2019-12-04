@@ -3,13 +3,13 @@ import { Button } from '@material-ui/core'
 import { ArrowForward } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
-export default function Bottom() {
+export default function BottomRegistrationMain() {
     return (
         <div className="bottom container-fluid">
             <div className="bottom__progress-bar">
                 <div className="bottom__separator"></div>
                 <div>
-                    <Link to="/registration">
+                    <Link to="/registration/main">
                         <div className="bottom_circle bottom_circle_selectable">1</div>
                     </Link>
                 </div>

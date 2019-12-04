@@ -3,7 +3,7 @@ import { Paper, Typography } from '@material-ui/core'
 
 import './registration.css'
 
-import Bottom from './components/bottom'
+import BottomRegistrationMain from './components/bottom'
 import ContainerDiscipline from './components/container'
 
 export default function RegistrationMain() {
@@ -15,7 +15,7 @@ export default function RegistrationMain() {
             <Paper className="container-fluid">
                 <ContainerDiscipline />
             </Paper>
-            <Bottom />
+            <BottomRegistrationMain />
         </>
     )
 }

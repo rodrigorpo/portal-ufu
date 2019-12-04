@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { removeDisciplineFromSchedule } from '../../../../../../actions'
+import { removeDisciplines } from '../../../../../../actions'
 
 import { Paper, Divider, Tooltip } from '@material-ui/core'
 import { Remove as RemoveIcon, Warning as WarningIcon } from '@material-ui/icons'
@@ -11,7 +11,7 @@ function handleMouseIn(discipline) {}
 function handleMouseOut(discipline) {}
 
 function ScheduleMenu(props) {
-    const { state, removeDisciplineFromSchedule } = props
+    const { state, removeDisciplines } = props
 
     function hashGenerator(size) {
         const alphabet = 'abcdefghijklmnopqrstuvxyz1234567890ABCDEFGHIJKLMNOPQRSTUVXYZ'
@@ -33,7 +33,7 @@ function ScheduleMenu(props) {
     }
 
     function handleRemoveDiscipline(discipline) {
-        removeDisciplineFromSchedule(discipline)
+        removeDisciplines(discipline)
     }
 
     function generateRemoveIcon(discipline) {
@@ -111,5 +111,5 @@ function ScheduleMenu(props) {
 const mapStateToProps = store => ({
     state: store.disciplineState.schedule,
 })
-const mapDispatchToProps = dispatch => bindActionCreators({ removeDisciplineFromSchedule }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ removeDisciplines: removeDisciplines }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleMenu)

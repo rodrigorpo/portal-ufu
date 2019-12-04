@@ -52,7 +52,7 @@ body {
 
     .period__single {
         display: inline-block;
-        margin-left: 2rem;
+        padding-right: 2rem;
         margin-top: 1rem;
     }
 

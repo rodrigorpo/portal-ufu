@@ -1,20 +1,14 @@
 import {
     ADD_DISCIPLINE,
-    REMOVE_DISCIPLINE_FROM_SCHEDULE,
-    REMOVE_DISCIPLINE_FROM_DISCIPLINE
+    REMOVE_DISCIPLINE
 } from '../actions/types';
 
-export const addDiscipline = value => ({
+export const addDiscipline = discipline => ({
     type: ADD_DISCIPLINE,
-    newValue: value
+    discipline: discipline
 });
 
-export const removeDisciplineFromSchedule = (discipline) => ({
-    type: REMOVE_DISCIPLINE_FROM_SCHEDULE,
+export const removeDisciplines = (discipline) => ({
+    type: REMOVE_DISCIPLINE,
     disciplineToRemove: discipline
-});
-
-export const removeDisciplineFromDiscipline = value => ({
-    type: REMOVE_DISCIPLINE_FROM_DISCIPLINE,
-    disciplineToRemove: value
 });

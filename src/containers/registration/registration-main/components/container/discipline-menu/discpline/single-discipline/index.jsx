@@ -1,9 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { addDiscipline } from '../../../../../../../../actions'
+
 import { Typography, Card, CardContent, CardActionArea } from '@material-ui/core'
 import { Info } from '@material-ui/icons'
 import DisciplineModal from '../modal-discipline'
 
-export default function SingleDiscipline(props) {
+function SingleDiscipline(props) {
+    const { addDiscipline } = props
     const [style, setStyle] = React.useState('')
     const [open, setOpen] = React.useState(false)
     const [data, setData] = React.useState({ schedule: [] })
@@ -17,18 +22,23 @@ export default function SingleDiscipline(props) {
         setData(props.discipline)
         setOpen(true)
     }
-    const handleClickCard = event => {
+    const handleClickCard = discipline => {
         if (preventDefault) {
             preventDefault = false
             return
         }
+        // props.discipline.active
         style === '' ? setStyle('selected') : setStyle('')
-        console.log('Click card')
+        addDiscipline(discipline)
     }
 
     return (
         <>
-            <Card style={{ display: 'inline-block', margin: '0.5rem' }} onClick={handleClickCard} className={style}>
+            <Card
+                style={{ display: 'inline-block', margin: '0.5rem' }}
+                onClick={() => handleClickCard(props.discipline)}
+                className={style}
+            >
                 <CardActionArea>
                     <CardContent style={{ display: 'flex', justifyContent: 'center' }}>
                         <div style={{ position: 'relative' }}>
@@ -36,7 +46,7 @@ export default function SingleDiscipline(props) {
                                 className="period__help"
                                 onClick={e => {
                                     preventDefault = true
-                                    handleClickInfo()
+                                    handleClickInfo(e)
                                 }}
                             />
                             <Typography variant="body1">{props.discipline.name}</Typography>
@@ -55,3 +65,6 @@ export default function SingleDiscipline(props) {
         </>
     )
 }
+
+const mapDispatchToProps = dispatch => bindActionCreators({ addDiscipline }, dispatch)
+export default connect(null, mapDispatchToProps)(SingleDiscipline)
