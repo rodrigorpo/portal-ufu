@@ -35,9 +35,9 @@ function SingleDiscipline(props) {
     return (
         <>
             <Card
-                style={{ display: 'inline-block', margin: '0.5rem' }}
+                style={{ display: 'inline-block', margin: '0.5rem', borderTop: "0.125rem solid #3f51b5" }}
                 onClick={() => handleClickCard(props.discipline)}
-                className={style}
+                className={props.discipline.active}
             >
                 <CardActionArea>
                     <CardContent style={{ display: 'flex', justifyContent: 'center' }}>

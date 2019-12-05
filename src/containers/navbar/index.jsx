@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
+import { withRouter } from 'react-router-dom'
 
 const dashName = {
     '/': {
@@ -22,10 +23,13 @@ const dashName = {
     '/registration/main': {
         name: 'Matrícula',
     },
-    '/registration/schedule': {
+    '/registration/confirm-schedule': {
         name: 'Matrícula',
     },
-    '/registration/reorder': {
+    '/registration/order-conflict-disciplines': {
+        name: 'Matrícula',
+    },
+    '/registration/finish': {
         name: 'Matrícula',
     },
 }
@@ -43,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function Navbar(props) {
-    const menuNameDisplay = dashName[window.location.pathname] ? dashName[window.location.pathname].name : 'Name'
+    const menuNameDisplay = dashName[props.location.pathname] ? dashName[props.location.pathname].name : 'Name'
     const classes = useStyles()
     return (
         <>
@@ -83,4 +87,4 @@ function Navbar(props) {
     )
 }
 
-export default Navbar
+export default withRouter(props => <Navbar {...props} />)

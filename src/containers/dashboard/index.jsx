@@ -38,7 +38,7 @@ export default function Dashboard() {
                 </Carousel>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                <Paper elevation="8" style={{ width: '50vw' }}>
+                <Paper elevation={1} style={{ width: '50vw' }}>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Card style={{ width: '20%', display: 'inline-block', margin: '1rem' }}>
                             <CardActionArea>

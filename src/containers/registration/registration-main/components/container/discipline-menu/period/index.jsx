@@ -8,7 +8,8 @@ function SinglePeriod(props) {
     return (
         <div className="period__single" draggable="false">
             <Typography
-                style={{ textAlign: 'center', border: 'solid black 1px', borderRadius: '4%' }}
+                variant="h6"
+                style={{ textAlign: 'center'}}
                 className="period__title-title"
             >
                 {props.periodPack.name}

@@ -15,7 +15,7 @@ export default function RegistrationMain() {
             <Paper className="container-fluid">
                 <ContainerDiscipline />
             </Paper>
-            <BottomRegistrationMain />
+            <BottomRegistrationMain currentLocation={1}/>
         </>
     )
 }

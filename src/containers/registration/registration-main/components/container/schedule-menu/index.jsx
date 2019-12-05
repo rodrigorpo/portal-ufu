@@ -1,14 +1,11 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { removeDisciplines } from '../../../../../../actions'
 
 import { Paper, Divider, Tooltip } from '@material-ui/core'
 import { Remove as RemoveIcon, Warning as WarningIcon } from '@material-ui/icons'
-
-function handleMouseIn(discipline) {}
-
-function handleMouseOut(discipline) {}
 
 function ScheduleMenu(props) {
     const { state, removeDisciplines } = props
@@ -26,7 +23,7 @@ function ScheduleMenu(props) {
         const baseTitle = 'As seguintes disciplinas estão com conflito:\n'
         const conflictDisciplines = disciplines.split('|').join('e')
         return (
-            <Tooltip title={`${baseTitle} ${conflictDisciplines}`}>
+            <Tooltip title={`${baseTitle} ${conflictDisciplines}`} style={{fill: "#ffd42a"}}>
                 <WarningIcon />
             </Tooltip>
         )
@@ -37,7 +34,7 @@ function ScheduleMenu(props) {
     }
 
     function generateRemoveIcon(discipline) {
-        return discipline !== '' ? (
+        return discipline !== '' && props.location.pathname === '/registration/main' ? (
             <Tooltip
                 className="discipline_remove-icon"
                 title={`Clique para remover a disciplina ${discipline}`}
@@ -49,9 +46,9 @@ function ScheduleMenu(props) {
     }
 
     return (
-        <div style={{ display: 'inline-block', paddingLeft: '1rem' }}>
-            <Paper style={{ width: '34vw', padding: '1rem' }}>
-                <Paper>
+        <div style={props.styles.extern}>
+            <Paper style={props.styles.intern}>
+                <Paper style={{backgroundColor: "var(--blue)", color: "#fff"}}>
                     <div className="column__name"> </div>
                     {state.days.map(dayOfWeek => {
                         return (
@@ -70,10 +67,7 @@ function ScheduleMenu(props) {
                                 {row.disciplines.map(discipline => {
                                     return (
                                         <Paper key={hashGenerator(16)} className="row__atribute">
-                                            <div
-                                                onMouseEnter={handleMouseIn.bind(this, discipline)}
-                                                onMouseLeave={handleMouseOut}
-                                            >
+                                            <div>
                                                 {discipline.split('|')[1] ? null : generateRemoveIcon(discipline)}
                                                 {discipline.split('|')[1] ? generateWarningIcon(discipline) : discipline}
                                             </div>
@@ -111,5 +105,5 @@ function ScheduleMenu(props) {
 const mapStateToProps = store => ({
     state: store.disciplineState.schedule,
 })
-const mapDispatchToProps = dispatch => bindActionCreators({ removeDisciplines: removeDisciplines }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleMenu)
+const mapDispatchToProps = dispatch => bindActionCreators({ removeDisciplines }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(props => <ScheduleMenu {...props} />))

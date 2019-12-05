@@ -3,9 +3,12 @@ import Menu from '../menu/'
 import LandingPage from '../landingPage'
 import Dashboard from '../dashboard'
 import RegistrationMain from '../registration/registration-main'
+import RegistrationConfirmSchedule from '../registration/confirm-schedule'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { Store } from '../../store'
+import PriorityOrder from '../registration/priority-order'
+import FinishRegistration from '../registration/finish'
 
 class App extends React.Component {
     constructor(props) {
@@ -40,6 +43,9 @@ class App extends React.Component {
                             />
                             <Route path="/dashboard" component={Dashboard} />
                             <Route path="/registration/main" component={RegistrationMain} />
+                            <Route path="/registration/confirm-schedule" component={RegistrationConfirmSchedule} />
+                            <Route path="/registration/order-conflict-disciplines" component={PriorityOrder} />
+                            <Route path="/registration/finish" component={FinishRegistration} />
                         </Switch>
                     </BrowserRouter>
                 </Provider>

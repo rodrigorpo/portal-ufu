@@ -1,5 +1,5 @@
 import {
-    ADD_DISCIPLINE, REMOVE_DISCIPLINE
+    ADD_DISCIPLINE, REMOVE_DISCIPLINE, ORDER_CONFLICT
 } from '../actions/types';
 
 const untreatedInitialState = {
@@ -33,7 +33,7 @@ const untreatedInitialState = {
                     disciplines: [
                         {
                             active: '', name: 'MM',
-                            schedule: ['Seg 8:50 - 10:40', 'Ter 8:50 - 10:40'],
+                            schedule: ['Seg 8:50 - 10:40', 'Ter 8:50 - 10:40', 'Qua 8:50 - 10:40'],
                         },
                     ],
                 },
@@ -42,7 +42,7 @@ const untreatedInitialState = {
                     disciplines: [
                         {
                             active: '', name: 'CE1',
-                            schedule: ['Seg 8:50 - 10:40', 'Ter 8:50 - 10:40'],
+                            schedule: ['Seg 10:40 - 12:20', 'Ter 10:40 - 12:20'],
                         },
                         { active: '', name: 'EXP-CE1', schedule: ['Ter 13:10 - 14:50'] },
                     ],
@@ -54,7 +54,7 @@ const untreatedInitialState = {
                             active: '', name: 'CTM',
                             schedule: ['Seg 7:10 - 8:50', 'Sex 7:10 - 8:50'],
                         },
-                        { active: '', name: 'EXP-CTM', schedule: ['Ter 13:10 - 14:50'] },
+                        { active: '', name: 'EXP-CTM', schedule: ['Qui 13:10 - 14:50'] },
                     ],
                 },
                 {
@@ -62,7 +62,7 @@ const untreatedInitialState = {
                     disciplines: [
                         {
                             active: '', name: 'ESOF',
-                            schedule: ['Ter 7:10 - 8:50', 'Qua 8:50 - 10:40'],
+                            schedule: ['Qua 7:10 - 8:50', 'Qui 8:50 - 10:40'],
                         },
                     ],
                 },
@@ -70,17 +70,17 @@ const untreatedInitialState = {
                     id: '5',
                     disciplines: [
                         {
-                            active: '', name: 'F3',
+                            active: '', name: 'F2',
                             schedule: ['Qua 14:50 - 16:50', 'Qui 14:50 - 16:50'],
                         },
-                        { active: '', name: 'EXP-F3', schedule: ['Qua 13:10 - 14:50'] },
+                        { active: '', name: 'EXP-F2', schedule: ['Qua 13:10 - 14:50'] },
                     ],
                 },
                 {
                     id: '6',
                     disciplines: [
                         {
-                            active: '', name: 'SISII',
+                            active: '', name: 'SIS1',
                             schedule: ['Ter 16:50 - 18:30', 'Qui 16:50 - 18:30'],
                         },
                     ],
@@ -94,37 +94,37 @@ const untreatedInitialState = {
                     id: '1',
                     disciplines: [
                         {
-                            active: '', name: 'MM',
-                            schedule: ['Seg 8:50 - 10:40', 'Ter 8:50 - 10:40'],
+                            active: '', name: 'ELA1',
+                            schedule: ['Seg 13:10 - 14:50', 'Qua 13:10 - 14:50'],
                         },
+                        { active: '', name: 'EXP-ELA1', schedule: ['Qua 8:50 - 10:40'] },
                     ],
                 },
                 {
                     id: '2',
                     disciplines: [
                         {
-                            active: '', name: 'CE1',
+                            active: '', name: 'CE2',
                             schedule: ['Seg 8:50 - 10:40', 'Ter 8:50 - 10:40'],
                         },
-                        { active: '', name: 'EXP-CE1', schedule: ['Ter 13:10 - 14:50'] },
+                        { active: '', name: 'EXP-CE2', schedule: ['Ter 10:40 - 12:20'] },
                     ],
                 },
                 {
                     id: '3',
                     disciplines: [
                         {
-                            active: '', name: 'CTM',
+                            active: '', name: 'ELMT',
                             schedule: ['Seg 7:10 - 8:50', 'Sex 7:10 - 8:50'],
-                        },
-                        { active: '', name: 'EXP-CTM', schedule: ['Ter 13:10 - 14:50'] },
+                        }
                     ],
                 },
                 {
                     id: '4',
                     disciplines: [
                         {
-                            active: '', name: 'ESOF',
-                            schedule: ['Ter 7:10 - 8:50', 'Qua 8:50 - 10:40'],
+                            active: '', name: 'FT',
+                            schedule: ['Seg 16:50 - 18:30', 'Qua 16:50 - 18:30'],
                         },
                     ],
                 },
@@ -132,30 +132,25 @@ const untreatedInitialState = {
                     id: '5',
                     disciplines: [
                         {
-                            active: '', name: 'F3',
-                            schedule: ['Qua 14:50 - 16:50', 'Qui 14:50 - 16:50'],
-                        },
-                        { active: '', name: 'EXP-F3', schedule: ['Qua 13:10 - 14:50'] },
-                    ],
-                },
-                {
-                    id: '6',
-                    disciplines: [
-                        {
                             active: '', name: 'SISII',
                             schedule: ['Ter 16:50 - 18:30', 'Qui 16:50 - 18:30'],
                         },
                     ],
-                },
+                }
             ],
         },
-    ]
+    ],
+    conflictDisciplines: []
 }
 
 const initialState = getFromSessionStorage('disciplinesState') || setInitialSessionStorage()
 
 const dayHelper = {
     'SEG': 0, 'TER': 1, 'QUA': 2, 'QUI': 3, 'SEX': 4, 'SAB': 5
+}
+
+const dayHelperInverse = {
+    0: 'SEG', 1: 'TER', 2: 'QUA', 3: 'QUI', 4: 'SEX', 5: 'SAB'
 }
 
 const amHelper = {
@@ -179,7 +174,7 @@ const pmHelper = {
 }
 
 function getFromSessionStorage(name) {
-    window.sessionStorage.getItem(name)
+    return JSON.parse(window.sessionStorage.getItem(name))
 }
 
 function setSessionStorage(name, object) {
@@ -280,10 +275,10 @@ function mapRemovedDisciplines(turnObj, discipline) {
             return objDiscipline.split('|')[0].trim()
 
         }
-        if(objDiscipline === discipline) {
+        if (objDiscipline === discipline) {
             return ''
         }
-        return objDiscipline        
+        return objDiscipline
     })
 }
 
@@ -296,7 +291,7 @@ function handleToggleClassDisciplinesPeriod(actualState, discipline) {
                 if (obj3.name === discipline) {
                     newStatePeriod[index1].chainDisciplines[index2].disciplines[index3] = {
                         ...newStatePeriod[index1].chainDisciplines[index2].disciplines[index3],
-                        active: newStatePeriod[index1].chainDisciplines[index2].disciplines[index3].acttive ? '' : 'selected'
+                        active: newStatePeriod[index1].chainDisciplines[index2].disciplines[index3].active === 'selected' ? '' : 'selected'
                     }
                 }
             })
@@ -306,23 +301,62 @@ function handleToggleClassDisciplinesPeriod(actualState, discipline) {
     return newStatePeriod;
 }
 
+function handleAdjusts(schedule) {
+    const amConflicts = streamMethodsHelper([...schedule.amTime])
+    const pmConflicts = streamMethodsHelper([...schedule.pmTime])
+
+    const tempList = []
+
+    amConflicts.forEach(obj => {
+        obj.forEach(obj2 => tempList.push(obj2))
+    })
+    pmConflicts.forEach(obj => {
+        obj.forEach(obj2 => tempList.push(obj2))
+    })
+
+    const finishList = [...new Set(tempList)]
+
+    return finishList
+}
+
+function streamMethodsHelper(obj) {
+    return obj
+        .map((row) => {
+            return row.disciplines.map((discipline, index) => { return { discipline, day: dayHelperInverse[index], hour: row.rowHour } })
+                .filter(possible => {
+                    return possible.discipline.includes('|')
+                })
+        })
+        .filter(obj => obj.length > 0)
+}
+
+
 export const disciplinesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_DISCIPLINE:
+            setSessionStorage('orderedState', null)
+            const handleSchedule = handleAddDisciplineSchedule(state, action.discipline)
             const newStateAddingDiscipline = {
-                schedule: handleAddDisciplineSchedule(state, action.discipline),
+                schedule: handleSchedule,
                 period: handleToggleClassDisciplinesPeriod(state, action.discipline.name),
+                conflictDisciplines: handleAdjusts(handleSchedule)
             }
             setSessionStorage('disciplinesState', newStateAddingDiscipline);
             return newStateAddingDiscipline
         case REMOVE_DISCIPLINE:
+            setSessionStorage('orderedState', null)
             //TODO: Disparar para o lado das disciplinas
             const newStateRemoveDiscipline = {
+                ...state,
                 schedule: handleRemoveDisciplineSchedule(state, action.disciplineToRemove),
                 period: handleToggleClassDisciplinesPeriod(state, action.disciplineToRemove),
             }
             setSessionStorage('disciplinesState', newStateRemoveDiscipline);
             return newStateRemoveDiscipline
+        case ORDER_CONFLICT:
+            return {
+                ...state, conflictDisciplines: action.conflictDisciplines
+            }
         default:
             return state;
     }

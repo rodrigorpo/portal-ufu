@@ -30,14 +30,13 @@ export default function TemporaryDrawer(props) {
         >
             <List>
                 {['Dashboard'].map((text, index) => (
-                    <Link to="/dashboard" key={text}>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <DashboardIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    </Link>
+                    <ListItem button key={text} style={{ position: 'relative' }}>
+                        <ListItemIcon>
+                            <DashboardIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                        <Link to={'/dashboard'} className="global-expansive" />
+                    </ListItem>
                 ))}
             </List>
             <Divider />
@@ -49,36 +48,35 @@ export default function TemporaryDrawer(props) {
                     { name: 'Identidade Acadêmica', path: '/registration' },
                     { name: 'Solicitações Gerais', path: '/registration' },
                 ].map(obj => (
-                    <Link key={obj.name} to={obj.path}>
-                        <ListItem button >
-                            {obj.name === 'Matrícula' ? (
-                                <ListItemIcon>
-                                    <AssignmentIcon />
-                                </ListItemIcon>
-                            ) : null}
-                            {obj.name === 'Documentos' ? (
-                                <ListItemIcon>
-                                    <InsertDriveFileIcon />
-                                </ListItemIcon>
-                            ) : null}
-                            {obj.name === 'Calendário Estudantil' ? (
-                                <ListItemIcon>
-                                    <DateRangeIcon />
-                                </ListItemIcon>
-                            ) : null}
-                            {obj.name === 'Identidade Acadêmica' ? (
-                                <ListItemIcon>
-                                    <AccountBoxIcon />
-                                </ListItemIcon>
-                            ) : null}
-                            {obj.name === 'Solicitações Gerais' ? (
-                                <ListItemIcon>
-                                    <MoreHorizIcon />
-                                </ListItemIcon>
-                            ) : null}
-                            <ListItemText primary={obj.name} />
-                        </ListItem>
-                    </Link>
+                    <ListItem button key={obj.name} style={{ position: 'relative' }}>
+                        {obj.name === 'Matrícula' ? (
+                            <ListItemIcon>
+                                <AssignmentIcon />
+                            </ListItemIcon>
+                        ) : null}
+                        {obj.name === 'Documentos' ? (
+                            <ListItemIcon>
+                                <InsertDriveFileIcon />
+                            </ListItemIcon>
+                        ) : null}
+                        {obj.name === 'Calendário Estudantil' ? (
+                            <ListItemIcon>
+                                <DateRangeIcon />
+                            </ListItemIcon>
+                        ) : null}
+                        {obj.name === 'Identidade Acadêmica' ? (
+                            <ListItemIcon>
+                                <AccountBoxIcon />
+                            </ListItemIcon>
+                        ) : null}
+                        {obj.name === 'Solicitações Gerais' ? (
+                            <ListItemIcon>
+                                <MoreHorizIcon />
+                            </ListItemIcon>
+                        ) : null}
+                        <ListItemText primary={obj.name} />
+                        <Link to={obj.path} className="global-expansive" />
+                    </ListItem>
                 ))}
             </List>
         </div>
